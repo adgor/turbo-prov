@@ -6,15 +6,15 @@ Project Description
 
 ### Todo
 
-- [ ]   
+- [ ] [try layout example connection to be like this](https://www.youtube.com/watch?v=vE3LOHU0OV8)  
 - [ ] API point @all/+-/Category/Location ??  
-- [ ] React-fromAPI-search  
 - [ ] Nextjs-crud-searchFromMongoDB-&&API  
 - [ ] NextJS-landingPage  
 - [ ] Astro-fromAPI-search  
 
 ### In Progress
 
+- [ ] React-fromAPI && search  
 
 ### Done ✓
 
