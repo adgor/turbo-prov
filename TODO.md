@@ -6,6 +6,8 @@ Project Description
 
 ### Todo
 
+- [ ]   
+- [ ] API point @all/+-/Category/Location ??  
 - [ ] React-fromAPI-search  
 - [ ] Nextjs-crud-searchFromMongoDB-&&API  
 - [ ] NextJS-landingPage  
