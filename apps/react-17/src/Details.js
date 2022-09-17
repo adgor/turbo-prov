@@ -1,7 +1,8 @@
-import { Component } from "react";
+import { Component, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemeContext from "./ThemeContext";
 
 class Details extends Component {
   // constructor(props) {
@@ -45,7 +46,18 @@ class Details extends Component {
           <h3>
             {animal} - {breed} - {city}, {state}
           </h3>
-          <button>Adopt {name}</button>
+
+          {/* old way */}
+          {/* <ThemeContext.Consumer>
+            {([theme]) => (
+              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+            )}
+          </ThemeContext.Consumer> */}
+
+          {/* from Wrraper useContext */}
+          <button style={{ backgroundColor: this.props.theme }}>
+            Adopt {name}
+          </button>
           <p>{description}</p>
         </div>
       </div>
@@ -55,10 +67,11 @@ class Details extends Component {
 
 const WrappedDetails = () => {
   const params = useParams();
+  const [theme] = useContext(ThemeContext);
 
   return (
     <ErrorBoundary>
-      <Details params={params} />
+      <Details theme={theme} params={params} />
     </ErrorBoundary>
   );
 };
