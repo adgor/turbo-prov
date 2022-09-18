@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
+import Jobs from "./Jobs";
 import ThemeContext from "./ThemeContext";
 
 const ANIMALS = ["bird", "dog", "cat", "rabbit", "reptile"];
@@ -13,10 +14,24 @@ const SearchParams = () => {
   const [pets, setPets] = useState([]);
   const [breeds] = useBreedList(animal);
   const [theme, setTheme] = useContext(ThemeContext);
+  const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
     requestPets();
+    requestJobs();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function requestJobs() {
+    //
+    const res = await fetch(`http://localhost:3002/api/jobs`);
+   
+    const json = await res.json();
+    // console.log('e para   ->', json)
+ 
+     setJobs(json);
+  }
+
+ console.log('e ditaaa -> ', jobs); 
 
   async function requestPets() {
     const res = await fetch(
@@ -103,6 +118,7 @@ const SearchParams = () => {
         </label>
         <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
+      <Jobs jobs={jobs} />
       <Results pets={pets} />
     </div>
   );
