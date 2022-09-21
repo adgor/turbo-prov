@@ -1,54 +1,55 @@
-import { useState, useEffect, useContext } from "react";
-import useBreedList from "./useBreedList";
+import { useState, useEffect, useContext, FunctionComponent } from "react";
 import Results from "./Results";
-import Jobs from "./Jobs";
+import useBreedList from "./useBreedList";
 import ThemeContext from "./ThemeContext";
+// import Jobs from "./Jobs";
+import { PetAPIResponse, Animal, Pet } from "./APIResponsesTypes";
 
-const ANIMALS = ["bird", "dog", "cat", "rabbit", "reptile"];
+const ANIMALS: Animal[] = ["bird", "dog", "cat", "rabbit", "reptile"];
 
-const SearchParams = () => {
+const SearchParams: FunctionComponent = () => {
   // const location = "debar";
   const [location, setLocation] = useState("");
-  const [animal, setAnimal] = useState("");
+  const [animal, setAnimal] = useState("" as Animal);
   const [breed, setBreed] = useState("");
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState([] as Pet[]);
   const [breeds] = useBreedList(animal);
   const [theme, setTheme] = useContext(ThemeContext);
-  const [jobs, setJobs] = useState([]);
+  // const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    requestPets();
-    requestJobs();
+    void requestPets();
+    // void requestJobs();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function requestJobs() {
-    //
-    const res = await fetch(`http://localhost:3002/api/jobs`);
+  // async function requestJobs() {
+  //   //
+  //   const res = await fetch(`http://localhost:3002/api/jobs`);
 
-    const json = await res.json();
-    // console.log('e para   ->', json)
+  //   const json = await res.json();
+  //   // console.log('e para   ->', json)
 
-    setJobs(json);
-  }
+  //   setJobs(json);
+  // }
 
-  console.log("e ditaaa -> ", jobs);
+  // console.log("e ditaaa -> ", jobs);
 
   async function requestPets() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
 
     setPets(json.pets);
   }
   // console.log(pets);
 
   return (
-    <div className="search-params text-red-500 ">
+    <div className="text-red-500 search-params ">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestPets();
+          void requestPets();
         }}
       >
         <label htmlFor="location">
@@ -66,11 +67,11 @@ const SearchParams = () => {
             id="animal"
             value={animal}
             onChange={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
               setBreed("");
             }}
             onBlur={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
               setBreed("");
             }}
           >
@@ -118,7 +119,7 @@ const SearchParams = () => {
         </label>
         <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
-      <Jobs jobs={jobs} />
+      {/* <Jobs jobs={jobs} /> */}
       <Results pets={pets} />
     </div>
   );
